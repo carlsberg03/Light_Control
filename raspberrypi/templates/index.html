@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>智能灯光控制系统</title>
+<script>
+  function toggle_rainbow_enable(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_rainbow_enable', true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+  
+  }
+  function toggle_target_intensity(value) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_target_intensity/'+value, true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+
+  }
+  function toggle_auto_color(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_auto_color', true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+ 
+  }
+  function toggle_auto_intensity(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_auto_intensity', true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+
+  }
+  function toggle_auto_enable(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_auto_enable', true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+  
+  }
+  function toggle_target_color(value) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_target_color/'+value, true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+ 
+  }
+  function toggle_enable1(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_enable1', true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+ 
+  }
+  function toggle_enable2(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_enable2', true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+
+  }
+  function toggle_enable3(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_enable3', true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+  }
+  function toggle_enable4(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/toggle_enable4', true);
+      xhr.send();
+      window.setTimeout(function () {
+             window.location.reload();
+      },200);
+  }
+</script>
+
+<style>
+
+  body {
+    background-image: url("https://i.postimg.cc/rp1rc7wN/bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+.disable {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgba(220, 0, 0, 1);
+    background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.disable:hover {
+    background-color: rgba(255, 0, 0, 1);
+}
+
+.disable:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.enable {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgb(90, 240, 36);
+    background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.enable:hover {
+    background-color: rgb(50, 242, 33);
+}
+
+.enable:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+</style>
+
+
+
+<div>
+<center> <font size="6">当前室内温度：{{ real_temp }} °C </font></center>
+<center> <font size="6">当前室内湿度：{{ real_humi }} %</font></center>
+</div>
+
+<HR align=center width=300 color=#987cb9 SIZE=1>
+<HR align=center width=300 color=#987cb9 SIZE=1>
+<center>
+{% if auto_intensity == True %}
+<div>
+    <input type="range" id="target_intensity2" name="intensity"
+    onmouseup	="toggle_target_intensity(this.value)"
+    min="0" max="1000" value="{{ target_intensity }}">
+<label for="intensity">光强(lx)</label>
+</div>
+{% else %}
+<div>
+    <input type="range" id="target_intensity1" name="intensity"
+    onmouseup	="toggle_target_intensity(this.value)"
+    min="0" max="9" value="{{ target_intensity }}">
+<label for="intensity">光强(level)</label>
+
+</div>
+{% endif %}
+
+<div>
+  <input type="range" id="target_color" name="color"
+         onmouseup	="toggle_target_color(this.value)"
+         min="0" max="9" value="{{ target_color }}">
+  <label for="intensity">色温</label>
+</div>
+
+
+<br>
+
+
+<label>彩虹灯效</label>
+{% if rainbow_enable == True %}
+<input class="enable"
+       onclick="toggle_rainbow_enable()"
+       type="button"
+       value="enable">
+{% else %}
+<input class="disable"
+       onclick="toggle_rainbow_enable()"
+       type="button"
+       value="disable">
+{% endif %}
+<br>
+<label>自动色温管理</label>
+{% if auto_color == True %}
+<input class="enable"
+       onclick="toggle_auto_color()"
+       type="button"
+       value="enable">
+{% else %}
+<input class="disable"
+       onclick="toggle_auto_color()"
+       type="button"
+       value="disable">
+{% endif %}
+<br>
+<label>恒光管理</label>
+{% if auto_intensity == True %}
+<input class="enable"
+       onclick="toggle_auto_intensity()"
+       type="button"
+       value="enable">
+{% else %}
+<input class="disable"
+       onclick="toggle_auto_intensity()"
+       type="button"
+       value="disable">
+{% endif %}
+<br>
+<label>人体感应</label>
+{% if auto_enable == True %}
+<input class="enable"
+       onclick="toggle_auto_enable()"
+       type="button"
+       value="enable">
+{% else %}
+<input class="disable"
+       onclick="toggle_auto_enable()"
+       type="button"
+       value="disable">
+       <br>
+      <label>灯1</label>
+      {% if enable1 == 1 %}
+      <input class="enable"
+       onclick="toggle_enable1()"
+       type="button"
+       value="enable">
+      {% else %}
+        <input class="disable"
+       onclick="toggle_enable1()"
+       type="button"
+       value="disable">
+      {% endif %}
+       <br>
+       <label>灯2</label>
+       {% if enable2 == 1 %}
+      <input class="enable"
+       onclick="toggle_enable2()"
+       type="button"
+       value="enable">
+      {% else %}
+        <input class="disable"
+       onclick="toggle_enable2()"
+       type="button"
+       value="disable">
+      {% endif %}
+      <br>
+       <label>灯3</label>
+       {% if enable3 == 1 %}
+      <input class="enable"
+       onclick="toggle_enable3()"
+       type="button"
+       value="enable">
+      {% else %}
+        <input class="disable"
+       onclick="toggle_enable3()"
+       type="button"
+       value="disable">
+      {% endif %}
+       <br>
+       <label>灯4</label>
+       {% if enable4 == 1 %}
+      <input class="enable"
+       onclick="toggle_enable4()"
+       type="button"
+       value="enable">
+      {% else %}
+        <input class="disable"
+       onclick="toggle_enable4()"
+       type="button"
+       value="disable">
+      {% endif %}
+
+{% endif %}
+</center>
